@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import db.DataManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,6 +45,8 @@ public class AddFormController implements Initializable{
 	@FXML StackPane stackPane;
 	@FXML private AnchorPane mainAnchorPane;	
 	
+	@FXML private ImageView closeIcon;
+
 	@FXML private JFXTextField cage_number_field;
 	@FXML private Label cage_number_msg;
 	
@@ -66,6 +72,10 @@ public class AddFormController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		File imageFile =  new File("images/close-white.png");
+		Image closeImage = new Image(imageFile.toURI().toString());
+		closeIcon.setImage(closeImage);
+
 		TypeToggleGroup.selectedToggleProperty().addListener(
 		   (observable, oldToggle, newToggle) -> {
 		       if (newToggle == lapineBtn) {
@@ -165,9 +175,9 @@ public class AddFormController implements Initializable{
 			DataManager dataManager = new DataManager();
 			
 			if(dataManager.addAnimal(animal)) {
-				displayMessage("success","Opération effectuée avec succès.");
+				displayMessage("success","Opï¿½ration effectuï¿½e avec succï¿½s.");
 			}else {			
-				displayMessage("echec","Echec d'ajout !\nVeuillez vérifier que les informations fournies sont correctes et non pas dupliqués.");
+				displayMessage("echec","Echec d'ajout !\nVeuillez vï¿½rifier que les informations fournies sont correctes et non pas dupliquï¿½s.");
 			}
 			
 		}else {

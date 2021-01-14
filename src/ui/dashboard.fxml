@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1020.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1120.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="482.0" prefWidth="992.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -44,7 +44,7 @@
                               <Font size="13.0" />
                            </font>
                            <graphic>
-                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="addIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../images/plus-white.png" />
                                  </image>
@@ -63,7 +63,7 @@
                         </JFXTextField>
                         <Button layoutX="534.0" layoutY="22.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="120.0">
                            <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="searchIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../images/search-red.png" />
                                  </image>
@@ -72,46 +72,58 @@
                         </Button>
                         <JFXTextField fx:id="nbElements" editable="false" focusColor="BLACK" layoutX="534.0" layoutY="252.0" prefHeight="25.0" prefWidth="89.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                         <Label layoutX="545.0" layoutY="256.0" text="Total" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="111.0" />
+                        <JFXButton fx:id="updateBtn" layoutX="133.0" layoutY="21.0" onAction="#AddOnAction" prefHeight="35.0" prefWidth="118.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Mettre à jour" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fx:id="updateIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="deleteBtn" layoutX="261.0" layoutY="21.0" onAction="#AddOnAction" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Supprimer" textFill="WHITE">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fx:id="deleteIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="leftPane" layoutX="32.0" layoutY="64.0" prefHeight="330.0" prefWidth="230.0" style="-fx-background-color: #C90202; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="64.0">
                      <children>
-                        <ImageView fitHeight="49.0" fitWidth="36.0" layoutX="38.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/user-white.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="userIcon" fitHeight="49.0" fitWidth="36.0" layoutX="38.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                         <Label fx:id="username" contentDisplay="CENTER" layoutX="93.0" layoutY="35.0" text="username" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </Label>
-                        <JFXButton layoutX="1.0" layoutY="115.0" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: #C90202;" text="Accueil" textFill="WHITE">
+                        <JFXButton fx:id="homeBtn" layoutX="1.0" layoutY="115.0" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: #C90202;" text="Accueil" textFill="WHITE">
                            <font>
                               <Font name="Roboto" size="14.0" />
                            </font>
                         </JFXButton>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="homeIcon" fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/home-7-xl.png" />
                            </image>
                         </ImageView>
-                        <JFXButton layoutX="1.0" layoutY="165.0" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: #C90202;" text="Statistiques" textFill="WHITE">
+                        <JFXButton fx:id="statBtn" layoutX="1.0" layoutY="165.0" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: #C90202;" text="Statistiques" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </JFXButton>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="statIcon" fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/analytics-xl.png" />
                            </image>
                         </ImageView>
-                        <JFXButton layoutX="1.0" layoutY="208.0" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: #C90202;" text="Paramètres" textFill="WHITE">
+                        <JFXButton fx:id="confBtn" layoutX="1.0" layoutY="208.0" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: #C90202;" text="Paramètres" textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </JFXButton>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="confIcon" fitHeight="25.0" fitWidth="25.0" layoutX="38.0" layoutY="220.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/settings-white.png" />
                            </image>

@@ -1,0 +1,17 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.base.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.controls.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.fxml.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.graphics.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.media.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.swing.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx.web.jar",
+        "c:\\javafx-sdk-15.0.1\\lib\\javafx-swt.jar",
+        "c:\\mysql-connector-java-8.0.22\\mysql-connector-java-8.0.22.jar",
+        "libs/jfoenix-9.0.10.jar",
+        "libs/mysql-connector-java-8.0.22.jar"
+    ],
+    "scenebuilder.home": "C:\\Program Files\\SceneBuilder\\SceneBuilder.exe"
+}

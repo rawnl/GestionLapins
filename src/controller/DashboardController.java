@@ -53,9 +53,30 @@ public class DashboardController implements Initializable{
 	@FXML private Button minimizeBtn;
 	@FXML private ImageView minimizeIcon;
 	
+	@FXML private ImageView userIcon;
 	@FXML private Label username;
 	
+	@FXML private Button homeBtn;
+	@FXML private ImageView homeIcon;
+	
+	@FXML private Button statBtn;
+	@FXML private ImageView statIcon;
+	
+	@FXML private Button confBtn;
+	@FXML private ImageView confIcon;
+
 	@FXML private Button addBtn;
+	@FXML private ImageView addIcon;
+
+	@FXML private Button updateBtn;
+	@FXML private ImageView updateIcon;
+
+	@FXML private Button deleteBtn;
+	@FXML private ImageView deleteIcon;
+
+	@FXML private Button searchBtn;
+	@FXML private ImageView searchIcon;
+
 	@FXML private MenuButton choicesBtn;
 		
 	@FXML private TableView<Animal> tableView;
@@ -98,6 +119,39 @@ public class DashboardController implements Initializable{
 		File minimizeIconFile =  new File("images/minimize-white.png");
 		Image minimizeImage = new Image(minimizeIconFile.toURI().toString());
 		minimizeIcon.setImage(minimizeImage);
+
+		File userIconFile =  new File("images/user-white.png");
+		Image userImage = new Image(userIconFile.toURI().toString());
+		userIcon.setImage(userImage);
+
+		File homeIconFile =  new File("images/home-white.png");
+		Image homeImage = new Image(homeIconFile.toURI().toString());
+		homeIcon.setImage(homeImage);
+
+		File statIconFile =  new File("images/analytics-white.png");
+		Image statImage = new Image(statIconFile.toURI().toString());
+		statIcon.setImage(statImage);
+
+		File confIconFile =  new File("images/settings-white.png");
+		Image confImage = new Image(confIconFile.toURI().toString());
+		confIcon.setImage(confImage);
+
+		File addIconFile =  new File("images/plus-white.png");
+		Image addImage = new Image(addIconFile.toURI().toString());
+		addIcon.setImage(addImage);
+
+		File updateIconFile =  new File("images/update-white.png");
+		Image updateImage = new Image(updateIconFile.toURI().toString());
+		updateIcon.setImage(updateImage);
+
+		File deleteIconFile =  new File("images/delete-white.png");
+		Image deleteImage = new Image(deleteIconFile.toURI().toString());
+		deleteIcon.setImage(deleteImage);
+
+		File searchIconFile =  new File("images/search-red.png");
+		Image searchImage = new Image(searchIconFile.toURI().toString());
+		searchIcon.setImage(searchImage);
+
 	}
 	
 	public void initTableView() {
