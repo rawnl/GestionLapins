@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -94,12 +95,13 @@ public class DashboardController implements Initializable{
 	@FXML private TextField nbElements;
 	
 	private ObservableList<Animal> obsList;
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		initIcons();
+		addMenuItems();
 		initTableView();
-		updateTableView();
+		updateTableView("ALL");
 		//leftPane.setEffect(new GaussianBlur());
 	}
 	
@@ -154,6 +156,29 @@ public class DashboardController implements Initializable{
 
 	}
 	
+	public void addMenuItems(){
+		MenuItem defaultItem = new MenuItem("ALL");
+		MenuItem lapineItem = new MenuItem("LAPINE");
+		MenuItem lapereauItem = new MenuItem("LAPEREAU");
+
+		choicesBtn.getItems().addAll(defaultItem, lapineItem, lapereauItem);
+		
+		defaultItem.setOnAction(e ->{
+			updateTableView("ALL");
+			System.out.println("called updateTableView(ALL)");
+		});
+
+		lapineItem.setOnAction(e ->{
+			updateTableView("LAPINE");
+			System.out.println("called updateTableView(LAPINE)");
+		});
+
+		lapereauItem.setOnAction(e ->{
+			updateTableView("LAPEREAU");
+			System.out.println("called updateTableView(LAPEREAU)");
+		});
+	}
+
 	public void initTableView() {
 		id.setCellValueFactory(new PropertyValueFactory<Animal,Integer>("id"));
 		cage_number.setCellValueFactory(new PropertyValueFactory<Animal,Integer>("cage_number"));
@@ -168,12 +193,15 @@ public class DashboardController implements Initializable{
 		DMB_next.setCellValueFactory(new PropertyValueFactory<Animal,Date>("dMB_next"));
 	}
 	
-	public void updateTableView() {
+	public void updateTableView(String type) {
 		DataManager dataManager = new DataManager();
 		ArrayList<Animal> animals = new ArrayList<Animal>();
-		animals = dataManager.getAnimals();
+		animals = dataManager.getAnimalsByType(type);
+		System.out.println(animals.size());
 		obsList = FXCollections.observableList(animals);
-		tableView.getItems().addAll(obsList); // works with animals as well 
+		//tableView.getItems().removeAll();
+		//tableView.getItems().addAll(obsList); // works with animals as well 
+		tableView.setItems(obsList);
 		nbElements.setText(((Integer)(tableView.getItems().size())).toString());
 	}
 	

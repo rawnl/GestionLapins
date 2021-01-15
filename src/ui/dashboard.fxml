@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -50,12 +49,7 @@
                                  </image>
                               </ImageView>
                            </graphic></JFXButton>
-                        <MenuButton fx:id="choicesBtn" alignment="CENTER" layoutX="580.0" layoutY="21.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #C90202;" text="Affichage" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="14.0">
-                          <items>
-                            <MenuItem fx:id="lapinesChoice" mnemonicParsing="false" text="LAPINES" />
-                            <MenuItem fx:id="laperauxChoice" mnemonicParsing="false" text="LAPEREAUX" />
-                          </items>
-                        </MenuButton>
+                        <MenuButton fx:id="choicesBtn" alignment="CENTER" layoutX="580.0" layoutY="21.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #C90202;" text="Affichage" textAlignment="CENTER" textFill="WHITE" AnchorPane.rightAnchor="14.0" />
                         <JFXTextField focusColor="#c90202" layoutX="305.0" layoutY="21.0" prefHeight="30.0" prefWidth="257.0" promptText="Recherche" AnchorPane.rightAnchor="120.0">
                            <font>
                               <Font size="13.0" />

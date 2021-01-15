@@ -59,7 +59,7 @@ public class DataManager {
 		boolean result = false;
 		getConnection();
 		try {
-			if(animal.getType().equals("Lapine")) {
+			if(animal.getType().equals("LAPINE")) {
 				PreStat = connection.prepareStatement("insert into animals (cage_number, birth_date, age, Type, DI, DMB, DI_next, DMB_next, MB) values (?, ?, ?, ?, ?, ?, ?, ?, ?) ; ");
 				PreStat.setInt(1,animal.getCage_number());
 				PreStat.setDate(2,animal.getBirth_date());
@@ -134,6 +134,45 @@ public class DataManager {
 				animal.setMB(res.getInt("MB"));
 				
 				animals.add(animal);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return animals;
+	}
+
+	public ArrayList<Animal> getAnimalsByType(String type) {
+		ArrayList<Animal> animals = new ArrayList<Animal>() ;
+		getConnection();
+		try {
+			Stat = connection.createStatement();
+			
+			if(type.equals("ALL")){
+				//res = Stat.executeQuery("select * from animals ; ");
+				return getAnimals();
+			}else{
+				PreStat = connection.prepareStatement("select * from Animals where Type = ? ; ");
+				PreStat.setString(1,type);
+				//res = Stat.executeQuery("select * from animals where Type = ' "+type+"';");
+				res = PreStat.executeQuery();
+				while(res.next()){
+					Animal animal = new Animal ();
+					
+					animal.setId(res.getInt("id"));
+					animal.setCage_number(res.getInt("cage_number"));
+					animal.setBirth_date(res.getDate("birth_date"));
+					animal.setAge(res.getInt("age"));
+					animal.setType(res.getString("type"));
+						
+					animal.setDI(res.getDate("DI"));
+					animal.setDMB(res.getDate("DMB"));
+					animal.setDI_next(res.getDate("DI_next"));
+					animal.setDMB_next(res.getDate("DMB_next"));
+					animal.setMB(res.getInt("MB"));
+					
+					animals.add(animal);
+				}
+				System.out.println("from data manager"+animals.size());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

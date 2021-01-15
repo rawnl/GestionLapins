@@ -164,9 +164,9 @@ public class AddFormController implements Initializable{
 			animal.setAge(age);
 			
 			if(TypeToggleGroup.getSelectedToggle() == lapereauBtn) {
-				animal.setType("Lapereau");
+				animal.setType("LAPEREAU");
 			}else {
-				animal.setType("Lapine");
+				animal.setType("LAPINE");
 				animal.setMB(Integer.parseInt(MB_field.getText()));
 				animal.setDI(ConvertDate(DI_field.getValue()));
 				animal.setDMB(ConvertDate(DMB_field.getValue()));
@@ -175,9 +175,9 @@ public class AddFormController implements Initializable{
 			DataManager dataManager = new DataManager();
 			
 			if(dataManager.addAnimal(animal)) {
-				displayMessage("success","Op�ration effectu�e avec succ�s.");
+				displayMessage("success","Opération effectuée avec succès.");
 			}else {			
-				displayMessage("echec","Echec d'ajout !\nVeuillez v�rifier que les informations fournies sont correctes et non pas dupliqu�s.");
+				displayMessage("echec","Echec d'ajout !\nVeuillez vérifier que les informations fournies sont correctes et non pas dupliquées.");
 			}
 			
 		}else {
