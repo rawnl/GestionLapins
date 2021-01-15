@@ -31,7 +31,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import model.Animal;
 import model.User;
 
@@ -95,14 +98,13 @@ public class DashboardController implements Initializable{
 	@FXML private TextField nbElements;
 	
 	private ObservableList<Animal> obsList;
-
+	private String displayType = "ALL";
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		initIcons();
 		addMenuItems();
 		initTableView();
-		updateTableView("ALL");
-		//leftPane.setEffect(new GaussianBlur());
+		updateTableView();
 	}
 	
 	public void initIcons() {
@@ -164,17 +166,20 @@ public class DashboardController implements Initializable{
 		choicesBtn.getItems().addAll(defaultItem, lapineItem, lapereauItem);
 		
 		defaultItem.setOnAction(e ->{
-			updateTableView("ALL");
+			displayType = "ALL";
+			updateTableView();
 			System.out.println("called updateTableView(ALL)");
 		});
 
 		lapineItem.setOnAction(e ->{
-			updateTableView("LAPINE");
+			displayType = "LAPINE";			
+			updateTableView();
 			System.out.println("called updateTableView(LAPINE)");
 		});
 
 		lapereauItem.setOnAction(e ->{
-			updateTableView("LAPEREAU");
+			displayType = "LAPEREAU" ;
+			updateTableView();
 			System.out.println("called updateTableView(LAPEREAU)");
 		});
 	}
@@ -193,14 +198,12 @@ public class DashboardController implements Initializable{
 		DMB_next.setCellValueFactory(new PropertyValueFactory<Animal,Date>("dMB_next"));
 	}
 	
-	public void updateTableView(String type) {
+	public void updateTableView() {
 		DataManager dataManager = new DataManager();
 		ArrayList<Animal> animals = new ArrayList<Animal>();
-		animals = dataManager.getAnimalsByType(type);
+		animals = dataManager.getAnimalsByType(displayType);
 		System.out.println(animals.size());
 		obsList = FXCollections.observableList(animals);
-		//tableView.getItems().removeAll();
-		//tableView.getItems().addAll(obsList); // works with animals as well 
 		tableView.setItems(obsList);
 		nbElements.setText(((Integer)(tableView.getItems().size())).toString());
 	}
@@ -249,9 +252,20 @@ public class DashboardController implements Initializable{
 		stage.setScene(new Scene(root));
 		AddFormController addFormController = loader.getController();
 		addFormController.configureBackground();
+		
+		stage.initModality(Modality.WINDOW_MODAL); // APPLICATION_MODAL
+		Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
+		
+		stage.initOwner(primaryStage);
+		
+		addFormController.setDynamic();		
 		stage.show();
-		addFormController.setDynamic();
-		tableView.refresh();
+
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent we) {
+				updateTableView();
+			}
+		});
 	}
 	
 	@FXML

@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import model.Animal;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -102,7 +103,7 @@ public class AddFormController implements Initializable{
         (change.getControlNewText().matches("([1-9][0-9]*)?")) ? change : null));
 		
 		MB_field.setTextFormatter(new TextFormatter<>(change ->
-        (change.getControlNewText().matches("([1-9][0-9]*)?")) ? change : null));
+        (change.getControlNewText().matches("([0-9]*)?")) ? change : null));
 	}
 	
 	public void configureBackground() {
@@ -279,6 +280,9 @@ public class AddFormController implements Initializable{
 	@FXML
 	public void closeBtnOnAction(ActionEvent event) {
 		closeBtn.getScene().getWindow().hide();	
+		Stage stage = (Stage)closeBtn.getScene().getWindow();
+		stage.getOnCloseRequest().handle(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+		//closeBtn.getScene().getWindow().hide();
 	}	
 
 }
