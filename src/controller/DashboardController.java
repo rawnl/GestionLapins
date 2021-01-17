@@ -7,7 +7,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import db.DataManager;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +18,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,12 +34,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
+import db.DataManager;
 import model.Animal;
 import model.User;
 
@@ -94,18 +101,21 @@ public class DashboardController implements Initializable{
 	@FXML private TableColumn <Animal, Date> DMB;
 	@FXML private TableColumn <Animal, Date> DI_next;
 	@FXML private TableColumn <Animal, Date> DMB_next;
-		
+	@FXML private TableColumn<Animal, String> actions;
+
 	@FXML private TextField nbElements;
 	
 	private ObservableList<Animal> obsList;
 	private String displayType = "TOUS";
-	
+	private Animal animal ;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		initIcons();
 		addMenuItems();
 		initTableView();
-		updateTableView();
+		initActionIcons();
+		UpdateTableView();
 	}
 	
 	public void initIcons() {
@@ -168,24 +178,25 @@ public class DashboardController implements Initializable{
 		
 		defaultItem.setOnAction(e ->{
 			displayType = "TOUS";
-			updateTableView();
+			UpdateTableView();
 			System.out.println("called updateTableView(TOUS)");
 		});
 
 		lapineItem.setOnAction(e ->{
 			displayType = "LAPINE";			
-			updateTableView();
+			UpdateTableView();
 			System.out.println("called updateTableView(LAPINE)");
 		});
 
 		lapereauItem.setOnAction(e ->{
 			displayType = "LAPEREAU" ;
-			updateTableView();
+			UpdateTableView();
 			System.out.println("called updateTableView(LAPEREAU)");
 		});
 	}
 
 	public void initTableView() {
+
 		id.setCellValueFactory(new PropertyValueFactory<Animal,Integer>("id"));
 		cage_number.setCellValueFactory(new PropertyValueFactory<Animal,Integer>("cage_number"));
 		birth_date.setCellValueFactory(new PropertyValueFactory<Animal,Date>("birth_date"));
@@ -197,13 +208,129 @@ public class DashboardController implements Initializable{
 		DMB.setCellValueFactory(new PropertyValueFactory<Animal,Date>("dMB"));
 		DI_next.setCellValueFactory(new PropertyValueFactory<Animal,Date>("dI_next"));
 		DMB_next.setCellValueFactory(new PropertyValueFactory<Animal,Date>("dMB_next"));
+
 	}
-	
-	public void updateTableView() {
+
+	public void initActionIcons(){
+        //add cell of button edit 
+        Callback<TableColumn<Animal, String>, TableCell<Animal, String>> cellFoctory = (TableColumn<Animal, String> param) -> {
+			// make cell containing buttons
+			final TableCell<Animal, String> cell = new TableCell<Animal, String>() {
+				@Override
+				public void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					//that cell created only on non-empty rows
+					if (empty) {
+						//add button
+						setGraphic(null);
+						setText(null);
+					} else {
+						ImageView iconDelete = new ImageView();
+						File FileDeleteIcon =  new File("images/delete-red.png");
+						Image deleteImg = new Image(FileDeleteIcon.toURI().toString(),25,25, false,true);
+
+						iconDelete.setImage(deleteImg);		
+						iconDelete.setStyle(" -fx-cursor: hand ; -fx-fill:#C90202;");
+						iconDelete.setOnMouseClicked((MouseEvent event) -> {       
+							animal = tableView.getSelectionModel().getSelectedItem();
+							displayDeleteDialog();
+						});
+					
+						ImageView iconEdit = new ImageView();
+						File FileEditIcon =  new File("images/edit-red.png");
+						Image editImg = new Image(FileEditIcon.toURI().toString(), 25, 25, false, true);
+									
+						iconEdit.setImage(editImg);
+						iconEdit.setStyle(" -fx-cursor: hand ; -fx-fill:#C90202; ");
+						iconEdit.setOnMouseClicked((MouseEvent event) -> {
+							displayEditForm(event);
+						});
+
+						HBox managebtn = new HBox(iconEdit, iconDelete); // editIcon
+						managebtn.setStyle("-fx-alignment:center");
+						HBox.setMargin(iconDelete, new Insets(2, 2, 0, 3));
+						HBox.setMargin(iconEdit, new Insets(2, 2, 0, 3));
+						setGraphic(managebtn);
+						setText(null);
+					}
+				}
+			};
+            return cell;
+    	};
+        actions.setCellFactory(cellFoctory);
+        tableView.setItems(obsList);
+    }
+
+	public void displayDeleteDialog(){
+		System.out.println("icon delete clicked");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
+		Parent root;
+		try {
+			root = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+		
+			DeleteController deleteController = loader.getController();
+			deleteController.configureBackground();
+													
+			stage.initModality(Modality.WINDOW_MODAL); 
+			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
+													
+			stage.initOwner(primaryStage);
+			deleteController.setDynamic();		
+			stage.show();
+
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					if(deleteController.getAnswer()){
+						DataManager dataManager = new DataManager();
+						if(dataManager.DeleteAnimal(animal.getId())){
+							System.out.println("deleted succesfully");
+							UpdateTableView();
+						}else{
+							System.out.println("error");
+						}
+					}
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void displayEditForm(MouseEvent event){
+		System.out.println("icon edit clicked");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/addForm.fxml"));
+		Parent root;
+		try {
+			root = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+			AddFormController addFormController = loader.getController();
+			addFormController.configureBackground();
+													
+			stage.initModality(Modality.WINDOW_MODAL); // APPLICATION_MODAL
+			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
+													
+			stage.initOwner(primaryStage);
+			addFormController.setDynamic();		
+			stage.show();
+						
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					UpdateTableView();
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void UpdateTableView() {
 		DataManager dataManager = new DataManager();
 		ArrayList<Animal> animals = new ArrayList<Animal>();
 		animals = dataManager.getAnimalsByType(displayType);
-		System.out.println(animals.size());
 		obsList = FXCollections.observableList(animals);
 		tableView.setItems(obsList);
 		nbElements.setText(((Integer)(tableView.getItems().size())).toString());
@@ -264,11 +391,11 @@ public class DashboardController implements Initializable{
 
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
-				updateTableView();
+				UpdateTableView();
 			}
 		});
 	}
-	
+
 	@FXML
 	public void closeBtnOnAction(ActionEvent event) {
 		Stage stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
@@ -291,5 +418,6 @@ public class DashboardController implements Initializable{
 		stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
 		stage.setIconified(true);
 	}
-	
+
+
 }

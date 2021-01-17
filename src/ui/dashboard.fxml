@@ -33,6 +33,7 @@
                               <TableColumn fx:id="DMB" prefWidth="75.0" text="DMB" />
                               <TableColumn fx:id="DI_next" prefWidth="75.0" text="DI Prochaine" />
                               <TableColumn fx:id="DMB_next" prefWidth="75.0" text="DMB Prochaine" />
+                              <TableColumn fx:id="actions" prefWidth="75.0" text="Actions" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -66,7 +67,7 @@
                         </Button>
                         <JFXTextField fx:id="nbElements" editable="false" focusColor="BLACK" layoutX="534.0" layoutY="252.0" prefHeight="25.0" prefWidth="89.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                         <Label layoutX="545.0" layoutY="256.0" text="Total" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="111.0" />
-                        <JFXButton fx:id="updateBtn" layoutX="133.0" layoutY="21.0" onAction="#AddOnAction" prefHeight="35.0" prefWidth="118.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Mettre à jour" textFill="WHITE">
+                        <JFXButton fx:id="updateBtn" layoutX="133.0" layoutY="21.0" prefHeight="35.0" prefWidth="118.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Modifier" textFill="WHITE">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -74,7 +75,7 @@
                               <ImageView fx:id="updateIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </JFXButton>
-                        <JFXButton fx:id="deleteBtn" layoutX="261.0" layoutY="21.0" onAction="#AddOnAction" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Supprimer" textFill="WHITE">
+                        <JFXButton fx:id="deleteBtn" layoutX="261.0" layoutY="21.0" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Supprimer" textFill="WHITE">
                            <font>
                               <Font size="13.0" />
                            </font>

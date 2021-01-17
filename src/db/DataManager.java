@@ -104,11 +104,22 @@ public class DataManager {
 		return animal;
 	}
 	
-	public boolean EditAnimal(Animal animal) {
-		return false;
-	}
-	
 	public boolean DeleteAnimal(int id) {
+		boolean result = false ;
+		getConnection();
+		try {
+			PreStat = connection.prepareStatement("delete from Animals where ID = ? ; ");
+			PreStat.setInt(1,id);
+			if(PreStat.executeUpdate() >= 1){
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public boolean EditAnimal(Animal animal) {
 		return false;
 	}
 	
