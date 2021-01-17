@@ -99,6 +99,7 @@ public class DashboardController implements Initializable{
 	
 	private ObservableList<Animal> obsList;
 	private String displayType = "ALL";
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		initIcons();
