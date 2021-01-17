@@ -98,7 +98,7 @@ public class DashboardController implements Initializable{
 	@FXML private TextField nbElements;
 	
 	private ObservableList<Animal> obsList;
-	private String displayType = "ALL";
+	private String displayType = "TOUS";
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
@@ -160,16 +160,16 @@ public class DashboardController implements Initializable{
 	}
 	
 	public void addMenuItems(){
-		MenuItem defaultItem = new MenuItem("ALL");
+		MenuItem defaultItem = new MenuItem("TOUS");
 		MenuItem lapineItem = new MenuItem("LAPINE");
 		MenuItem lapereauItem = new MenuItem("LAPEREAU");
 
 		choicesBtn.getItems().addAll(defaultItem, lapineItem, lapereauItem);
 		
 		defaultItem.setOnAction(e ->{
-			displayType = "ALL";
+			displayType = "TOUS";
 			updateTableView();
-			System.out.println("called updateTableView(ALL)");
+			System.out.println("called updateTableView(TOUS)");
 		});
 
 		lapineItem.setOnAction(e ->{

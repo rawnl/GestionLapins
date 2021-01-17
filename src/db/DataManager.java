@@ -147,13 +147,11 @@ public class DataManager {
 		try {
 			Stat = connection.createStatement();
 			
-			if(type.equals("ALL")){
-				//res = Stat.executeQuery("select * from animals ; ");
+			if(type.equals("TOUS")){
 				return getAnimals();
 			}else{
 				PreStat = connection.prepareStatement("select * from Animals where Type = ? ; ");
 				PreStat.setString(1,type);
-				//res = Stat.executeQuery("select * from animals where Type = ' "+type+"';");
 				res = PreStat.executeQuery();
 				while(res.next()){
 					Animal animal = new Animal ();
