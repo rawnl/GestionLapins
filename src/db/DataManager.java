@@ -96,7 +96,16 @@ public class DataManager {
 			res = PreStat.executeQuery();
 			if(res.next()){
 				animal = new Animal ();
-				animal.setId(res.getInt("ID"));
+				animal.setId(res.getInt("id"));
+				animal.setCage_number(res.getInt("cage_number"));
+				animal.setBirth_date(res.getDate("birth_date"));
+				animal.setAge(res.getInt("age"));
+				animal.setType(res.getString("Type"));
+				animal.setDI(res.getDate("DI"));
+				animal.setDMB(res.getDate("DMB"));
+				animal.setDI_next(res.getDate("DI_next"));
+				animal.setDMB_next(res.getDate("DMB_next"));
+				animal.setMB(res.getInt("Mb"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,7 +129,39 @@ public class DataManager {
 	}
 
 	public boolean EditAnimal(Animal animal) {
-		return false;
+		boolean result = false;
+		getConnection();
+		try {
+			if(animal.getType().equals("LAPINE")) {
+				PreStat = connection.prepareStatement(" UPDATE animals SET birth_date = ? WHERE Id =  ? ; ");
+				PreStat.setDate(1,animal.getBirth_date());
+				/*
+				PreStat.setInt(2,animal.getAge());
+				PreStat.setString(3,animal.getType());
+				PreStat.setDate(4,animal.getDI());
+				PreStat.setDate(5,animal.getDMB());
+				PreStat.setDate(6,animal.getDI_next());
+				PreStat.setDate(7,animal.getDMB_next());
+				PreStat.setInt(8, animal.getMB());
+				*/
+				PreStat.setInt(2,animal.getId());
+				
+			}else {
+				//to change
+				PreStat = connection.prepareStatement("insert into animals (cage_number, birth_date, age, Type) values (?, ?, ?, ?) ; ");
+				PreStat.setInt(1,animal.getCage_number());
+				PreStat.setDate(2,animal.getBirth_date());
+				PreStat.setInt(3,animal.getAge());
+				PreStat.setString(4,animal.getType());
+			}		
+			//res = PreStat.executeUpdate();
+			if(PreStat.executeUpdate() >= 1){
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public ArrayList<Animal> getAnimals() {

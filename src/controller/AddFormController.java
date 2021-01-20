@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.File;
-//import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -39,7 +38,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class AddFormController implements Initializable{
-	
+
 	double xOffset;
 	double yOffset;
 	
@@ -132,6 +131,7 @@ public class AddFormController implements Initializable{
 			}
 		});
 	}
+
 	
 	public Date ConvertDate(LocalDate date) {
 		int year = date.getYear();
@@ -139,7 +139,8 @@ public class AddFormController implements Initializable{
 		int day = date.getDayOfMonth();
 		return new Date(year-1900,month-1, day);
 	}
-	
+
+
 	public int ConvertToAge(Date date) {
 		LocalDate today = LocalDate.now();
 		int yearsInBetween = (today.getYear() - date.getYear()) - 1900; 
@@ -202,7 +203,7 @@ public class AddFormController implements Initializable{
 			}
 		}
 	}
-	
+
 	public void displayMessage(String msgType, String msg) {
 		JFXDialogLayout dialogLayout = new JFXDialogLayout();
 		
@@ -248,7 +249,7 @@ public class AddFormController implements Initializable{
 		}
 		return result;
 	}
-	
+
 	public boolean validDateField(JFXDatePicker dateField) {
 		boolean result = false ;
 		if(dateField.getValue() != null && dateField.getValue().toString().isEmpty() == false) {
@@ -276,7 +277,7 @@ public class AddFormController implements Initializable{
 		DI_field.focusedProperty().addListener(changeEvent);
 		DMB_field.focusedProperty().addListener(changeEvent);
 	}
-	
+
 	@FXML
 	public void closeBtnOnAction(ActionEvent event) {
 		closeBtn.getScene().getWindow().hide();	
