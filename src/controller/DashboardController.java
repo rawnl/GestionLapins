@@ -243,7 +243,8 @@ public class DashboardController implements Initializable{
 						iconEdit.setImage(editImg);
 						iconEdit.setStyle(" -fx-cursor: hand ; -fx-fill:#C90202; ");
 						iconEdit.setOnMouseClicked((MouseEvent event) -> {
-							displayEditForm(event);
+							animal = tableView.getSelectionModel().getSelectedItem();
+							displayEditForm(animal);
 						});
 
 						HBox managebtn = new HBox(iconEdit, iconDelete); // editIcon
@@ -261,6 +262,7 @@ public class DashboardController implements Initializable{
         tableView.setItems(obsList);
     }
 
+	//fix success/error msgs
 	public void displayDeleteDialog(){
 		System.out.println("icon delete clicked");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
@@ -298,23 +300,25 @@ public class DashboardController implements Initializable{
 		}
 	}
 
-
-	public void displayEditForm(MouseEvent event){
+	public void displayEditForm(Animal animal){
 		System.out.println("icon edit clicked");
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/addForm.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/editForm.fxml"));
 		Parent root;
 		try {
 			root = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
-			AddFormController addFormController = loader.getController();
-			addFormController.configureBackground();
+			EditController editController = loader.getController();
+			editController.configureBackground();
+			editController.setAnimal(animal);
+
 													
 			stage.initModality(Modality.WINDOW_MODAL); // APPLICATION_MODAL
 			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
 													
 			stage.initOwner(primaryStage);
-			addFormController.setDynamic();		
+			editController.fillForm();	
+			editController.setDynamic();		
 			stage.show();
 						
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
