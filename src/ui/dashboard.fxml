@@ -58,22 +58,6 @@
                         </JFXTextField>
                         <JFXTextField fx:id="nbElements" editable="false" focusColor="BLACK" layoutX="534.0" layoutY="252.0" prefHeight="25.0" prefWidth="89.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                         <Label layoutX="545.0" layoutY="256.0" text="Total" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="111.0" />
-                        <JFXButton fx:id="updateBtn" layoutX="133.0" layoutY="21.0" prefHeight="35.0" prefWidth="118.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Modifier" textFill="WHITE">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fx:id="updateIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton fx:id="deleteBtn" layoutX="261.0" layoutY="21.0" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #C90202; -fx-border-radius: 1em;" text="Supprimer" textFill="WHITE">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fx:id="deleteIcon" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </JFXButton>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="leftPane" layoutX="32.0" layoutY="64.0" prefHeight="330.0" prefWidth="230.0" style="-fx-background-color: #C90202; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="64.0">

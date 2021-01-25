@@ -79,14 +79,7 @@ public class DashboardController implements Initializable{
 	@FXML private Button addBtn;
 	@FXML private ImageView addIcon;
 
-	@FXML private Button updateBtn;
-	@FXML private ImageView updateIcon;
-
-	@FXML private Button deleteBtn;
-	@FXML private ImageView deleteIcon;
-
 	@FXML private TextField search; 
-//	@FXML private ImageView searchIcon;
 
 	@FXML private MenuButton choicesBtn;
 		
@@ -154,19 +147,6 @@ public class DashboardController implements Initializable{
 		File addIconFile =  new File("images/plus-white.png");
 		Image addImage = new Image(addIconFile.toURI().toString());
 		addIcon.setImage(addImage);
-
-		File updateIconFile =  new File("images/update-white.png");
-		Image updateImage = new Image(updateIconFile.toURI().toString());
-		updateIcon.setImage(updateImage);
-
-		File deleteIconFile =  new File("images/delete-white.png");
-		Image deleteImage = new Image(deleteIconFile.toURI().toString());
-		deleteIcon.setImage(deleteImage);
-/*
-		File searchIconFile =  new File("images/search-red.png");
-		Image searchImage = new Image(searchIconFile.toURI().toString());
-		searchIcon.setImage(searchImage);
-*/
 	}
 	
 	public void addMenuItems(){
@@ -179,19 +159,16 @@ public class DashboardController implements Initializable{
 		defaultItem.setOnAction(e ->{
 			displayType = "TOUS";
 			UpdateTableView();
-			System.out.println("called updateTableView(TOUS)");
 		});
 
 		lapineItem.setOnAction(e ->{
 			displayType = "LAPINE";			
 			UpdateTableView();
-			System.out.println("called updateTableView(LAPINE)");
 		});
 
 		lapereauItem.setOnAction(e ->{
 			displayType = "LAPEREAU" ;
 			UpdateTableView();
-			System.out.println("called updateTableView(LAPEREAU)");
 		});
 	}
 
@@ -301,9 +278,9 @@ public class DashboardController implements Initializable{
 			tableView.setItems(sortedList);
 		});
 	}
+	
 	//fix success/error msgs
 	public void displayDeleteDialog(){
-		System.out.println("icon delete clicked");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
 		Parent root;
 		try {

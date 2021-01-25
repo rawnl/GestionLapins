@@ -224,7 +224,6 @@ public class DataManager {
 					
 					animals.add(animal);
 				}
-				System.out.println("from data manager"+animals.size());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
