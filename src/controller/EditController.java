@@ -212,8 +212,6 @@ public class EditController implements Initializable {
 
     @FXML
     public void editOnAction(ActionEvent event){
-        System.out.println("edit clicked");
-	
 		if(validateForm()) {
 			int cage = Integer.parseInt(cage_number_field.getText());
 			LocalDate birthDateField = birth_date_field.getValue();
@@ -236,7 +234,7 @@ public class EditController implements Initializable {
 				animal.setDI(ConvertDate(DI_field.getValue()));
 				animal.setDMB(ConvertDate(DMB_field.getValue()));
 			}
-
+			System.out.println(animal.getType()+animal.getId());
 			DataManager dataManager = new DataManager();
 			if(dataManager.EditAnimal(animal)) {
 				displayMessage("success","Opération effectuée avec succès.");

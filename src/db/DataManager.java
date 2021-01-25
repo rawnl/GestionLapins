@@ -1,4 +1,5 @@
 package db;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -133,28 +134,29 @@ public class DataManager {
 		getConnection();
 		try {
 			if(animal.getType().equals("LAPINE")) {
-				PreStat = connection.prepareStatement(" UPDATE animals SET birth_date = ? WHERE Id =  ? ; ");
-				PreStat.setDate(1,animal.getBirth_date());
-				/*
-				PreStat.setInt(2,animal.getAge());
-				PreStat.setString(3,animal.getType());
-				PreStat.setDate(4,animal.getDI());
-				PreStat.setDate(5,animal.getDMB());
-				PreStat.setDate(6,animal.getDI_next());
-				PreStat.setDate(7,animal.getDMB_next());
-				PreStat.setInt(8, animal.getMB());
-				*/
-				PreStat.setInt(2,animal.getId());
+				PreStat = connection.prepareStatement(" UPDATE animals SET cage_number = ?, birth_date = ?, age = ?, Type = ?, DI = ?, DMB = ?, MB = ? WHERE Id =  ? ; ");
 				
-			}else {
-				//to change
-				PreStat = connection.prepareStatement("insert into animals (cage_number, birth_date, age, Type) values (?, ?, ?, ?) ; ");
 				PreStat.setInt(1,animal.getCage_number());
 				PreStat.setDate(2,animal.getBirth_date());
 				PreStat.setInt(3,animal.getAge());
 				PreStat.setString(4,animal.getType());
-			}		
-			//res = PreStat.executeUpdate();
+				PreStat.setDate(5,animal.getDI());
+				PreStat.setDate(6,animal.getDMB());
+				PreStat.setInt(7, animal.getMB());
+				
+				PreStat.setInt(8,animal.getId());
+				
+			}else {
+				PreStat = connection.prepareStatement(" UPDATE animals SET cage_number = ?, birth_date = ?, age = ?, Type = ?, DI = Null, DMB = Null, DI_next = Null, DMB_next = Null, MB = Null WHERE Id =  ? ; ");
+				
+				PreStat.setInt(1,animal.getCage_number());
+				PreStat.setDate(2,animal.getBirth_date());
+				PreStat.setInt(3,animal.getAge());
+				PreStat.setString(4,animal.getType());
+
+				PreStat.setInt(5,animal.getId());
+			}	
+			System.out.println(PreStat);	
 			if(PreStat.executeUpdate() >= 1){
 				result = true;
 			}

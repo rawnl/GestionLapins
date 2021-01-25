@@ -113,6 +113,7 @@ public class LoginController implements Initializable{
 		DashboardController dashboardController = loader.getController();
 		dashboardController.setupUserInfo(user);
 		dashboardController.configureBackground();
+		dashboardController.enableSearch();
 		stage.show();
 		dashboardController.setDynamic();
 		login.getScene().getWindow().hide();

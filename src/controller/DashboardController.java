@@ -6,13 +6,13 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -85,8 +85,8 @@ public class DashboardController implements Initializable{
 	@FXML private Button deleteBtn;
 	@FXML private ImageView deleteIcon;
 
-	@FXML private Button searchBtn;
-	@FXML private ImageView searchIcon;
+	@FXML private TextField search; 
+//	@FXML private ImageView searchIcon;
 
 	@FXML private MenuButton choicesBtn;
 		
@@ -162,11 +162,11 @@ public class DashboardController implements Initializable{
 		File deleteIconFile =  new File("images/delete-white.png");
 		Image deleteImage = new Image(deleteIconFile.toURI().toString());
 		deleteIcon.setImage(deleteImage);
-
+/*
 		File searchIconFile =  new File("images/search-red.png");
 		Image searchImage = new Image(searchIconFile.toURI().toString());
 		searchIcon.setImage(searchImage);
-
+*/
 	}
 	
 	public void addMenuItems(){
@@ -262,6 +262,45 @@ public class DashboardController implements Initializable{
         tableView.setItems(obsList);
     }
 
+	public void enableSearch(){
+		FilteredList<Animal> filteredList = new FilteredList<>(obsList, e -> true);
+		search.setOnKeyReleased(e -> {
+			search.textProperty().addListener((observableValue, oldValue, newValue) -> {
+				filteredList.setPredicate((Predicate<? super Animal>) a ->{
+					if(newValue == null || newValue.isEmpty()){
+						return true;
+					}
+					String lowerCaseFilter = newValue.toLowerCase();
+					if(Integer.toString(a.getId()).contains(newValue) ){
+						return true;
+					}
+					else if (Integer.toString(a.getCage_number()).contains(newValue)){
+						return true;
+					}else if(a.getBirth_date() != null && a.getBirth_date().toString().contains(newValue)){
+						return true;
+					}else if(Integer.toString(a.getAge()).contains(newValue) ){
+						return true;
+					}else if(a.getDI() != null && a.getDI().toString().contains(newValue)){
+						return true;
+					}else if (a.getDMB() != null && a.getDMB().toString().contains(newValue)){
+						return true;
+					}else if (a.getDI_next() != null && a.getDI_next().toString().contains(newValue)){
+						return true ;
+					}else if(a.getDMB_next() != null && a.getDMB_next().toString().contains(newValue)){
+						return true;
+					}else if (Integer.toString(a.getMB()).contains(newValue)){
+						return true;
+					}else if ((a.getType().toLowerCase()).contains(lowerCaseFilter)){
+						return true;
+					}
+					return false;
+				});
+			});
+			SortedList<Animal> sortedList = new SortedList<>(filteredList);
+			sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+			tableView.setItems(sortedList);
+		});
+	}
 	//fix success/error msgs
 	public void displayDeleteDialog(){
 		System.out.println("icon delete clicked");
