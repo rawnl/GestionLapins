@@ -19,12 +19,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
@@ -98,6 +100,9 @@ public class DashboardController implements Initializable{
 
 	@FXML private TextField nbElements;
 	
+	@FXML private Pagination pagination;
+	private final static int rowsPerPage = 11 ;
+
 	private ObservableList<Animal> obsList;
 	private String displayType = "TOUS";
 	private Animal animal ;
@@ -109,6 +114,7 @@ public class DashboardController implements Initializable{
 		initTableView();
 		initActionIcons();
 		UpdateTableView();
+		pagination.setPageFactory(this::createPage);
 	}
 	
 	public void initIcons() {
@@ -279,6 +285,12 @@ public class DashboardController implements Initializable{
 		});
 	}
 	
+	public Node createPage(int pageIndex){
+		int fromIndex = pageIndex * rowsPerPage;
+		int toIndex = Math.min(fromIndex+rowsPerPage, Integer.parseInt(nbElements.getText()));
+		tableView.setItems(FXCollections.observableArrayList(obsList.subList(fromIndex, toIndex)));
+		return tableView;
+	}
 	//fix success/error msgs
 	public void displayDeleteDialog(){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
@@ -317,7 +329,6 @@ public class DashboardController implements Initializable{
 	}
 
 	public void displayEditForm(Animal animal){
-		System.out.println("icon edit clicked");
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/editForm.fxml"));
 		Parent root;
 		try {
@@ -327,7 +338,6 @@ public class DashboardController implements Initializable{
 			EditController editController = loader.getController();
 			editController.configureBackground();
 			editController.setAnimal(animal);
-
 													
 			stage.initModality(Modality.WINDOW_MODAL); // APPLICATION_MODAL
 			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
@@ -354,12 +364,14 @@ public class DashboardController implements Initializable{
 		obsList = FXCollections.observableList(animals);
 		tableView.setItems(obsList);
 		nbElements.setText(((Integer)(tableView.getItems().size())).toString());
+		int maxPages = Integer.parseInt(nbElements.getText()) / rowsPerPage;
+		pagination.setPageCount(maxPages);
 	}
 	
+	//set up the image
 	public void setupUserInfo(User user) {
 		this.user = user ;
 		username.setText(user.getUsername());
-		//set up the image
 	}
 	
 	public void configureBackground() {
@@ -405,7 +417,7 @@ public class DashboardController implements Initializable{
 		Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
 		
 		stage.initOwner(primaryStage);
-		
+	
 		addFormController.setDynamic();		
 		stage.show();
 
@@ -438,6 +450,5 @@ public class DashboardController implements Initializable{
 		stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
 		stage.setIconified(true);
 	}
-
 
 }
