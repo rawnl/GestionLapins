@@ -2,6 +2,15 @@ package application;
 	
 import java.io.IOException;
 
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+
+import notification.DailyJob;
 
 public class Main extends Application {
     
@@ -41,9 +52,29 @@ public class Main extends Application {
 				primaryStage.setY(event.getScreenY() - yOffset);
 			}
 		});
-	}
+	}	
 	
 	public static void main(String[] args) {
+		/*
+		try {
+
+			JobDetail dailyJob = JobBuilder.newJob(DailyJob.class).withIdentity("job1", "goup1").build();
+
+			Trigger trigger = TriggerBuilder.newTrigger().withIdentity("cronTrigger1", "group1")
+					.withSchedule(CronScheduleBuilder.cronSchedule("0 19 17 03 04 ? 2021")).build();//0/30 * * * * ?
+			
+			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();//new StdSchedulerFactory().getScheduler();
+			scheduler.start();
+			scheduler.scheduleJob(dailyJob, trigger);
+
+			Thread.sleep(10000);
+			//scheduler.shutdown();
+
+		} catch (SchedulerException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		*/
+		// Utils4J.addToClasspath("file:///"+System.getProperty("java.home")+ File.separator+"lib"+File.separator+"jfxrt.jar");
 		launch(args);
 	}
 }
