@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-import javafx.beans.value.ObservableValue;
+//import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -46,6 +46,7 @@ import javafx.util.Callback;
 import db.DataManager;
 import model.Animal;
 import model.User;
+import notification.Notification;
 
 public class DashboardController implements Initializable{
 	 
@@ -291,6 +292,7 @@ public class DashboardController implements Initializable{
 		tableView.setItems(FXCollections.observableArrayList(obsList.subList(fromIndex, toIndex)));
 		return tableView;
 	}
+	
 	//fix success/error msgs
 	public void displayDeleteDialog(){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
