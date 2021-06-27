@@ -1,9 +1,9 @@
 package notification;
 
-import java.util.Calendar;
+//import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
-import java.util.TimeZone;
+//import java.util.TimeZone;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;

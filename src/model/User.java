@@ -1,6 +1,6 @@
 package model;
 
-import com.google.gdata.data.extensions.Email;
+//import com.google.gdata.data.extensions.Email;
 
 public class User {
 	

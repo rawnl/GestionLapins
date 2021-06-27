@@ -3,49 +3,56 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+/*
 import java.net.URLConnection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+*/
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
-import javafx.collections.FXCollections;
+//import java.util.function.Predicate;
+
+//import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+//import javafx.collections.transformation.FilteredList;
+//import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+//import javafx.geometry.Insets;
+//import javafx.scene.Node;
+//import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+/*
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
+*/
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+//import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+//import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.Modality;
+//import javafx.stage.Modality;
 import javafx.stage.StageStyle;
+/*
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
-import db.DataManager;
+*/
+//import db.DataManager;
 import model.Animal;
 import model.User;
 

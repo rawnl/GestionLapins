@@ -1,7 +1,7 @@
 package controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
+//import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -10,11 +10,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
-
+/*
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-
+*/
 //import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,9 +30,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+//import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -41,8 +41,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
+//import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,7 +57,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
+//import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
@@ -66,7 +66,7 @@ import javafx.util.Callback;
 import db.DataManager;
 import model.Animal;
 import model.User;
-import notification.Notification;
+//import notification.Notification;
 
 public class DashboardController implements Initializable{
 	 

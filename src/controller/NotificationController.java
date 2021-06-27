@@ -33,8 +33,8 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 
 import java.io.File;
-import java.net.URL;
-import java.net.URLConnection;
+//import java.net.URL;
+//import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 
-import javafx.application.Platform;
+//import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,7 +55,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import javafx.util.converter.LocalDateStringConverter;
+//import javafx.util.converter.LocalDateStringConverter;
 import model.Animal;
 import model.User;
 import javafx.scene.layout.StackPane;
