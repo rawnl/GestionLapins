@@ -6,16 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch SheetsAndJava",
+            "name": "Launch DataManager",
             "request": "launch",
-            "mainClass": "SheetsAndJava",
-            "projectName": "GestionLapins_ebab5414"
-        },
-        {
-            "type": "java",
-            "name": "Launch SheetBot",
-            "request": "launch",
-            "mainClass": "SheetBot",
+            "mainClass": "db.DataManager",
             "projectName": "GestionLapins_ebab5414"
         },
         {

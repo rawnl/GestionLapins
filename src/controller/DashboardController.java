@@ -1,12 +1,19 @@
 package controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 
 //import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,7 +29,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -31,13 +41,23 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
@@ -55,9 +75,16 @@ public class DashboardController implements Initializable{
 	
 	private User user;
 	
+	@FXML private StackPane stackPane;
 	@FXML private AnchorPane mainAnchorPane;
 	@FXML private ImageView brandImageView;
-	
+
+	@FXML private GridPane dashboardPane;
+	@FXML private GridPane statsPane;
+	@FXML private GridPane settingsPane;
+
+	@FXML private PieChart pieChart;
+
 	@FXML private Button closeBtn;
 	@FXML private ImageView closeIcon;
 
@@ -67,7 +94,10 @@ public class DashboardController implements Initializable{
 	@FXML private Button minimizeBtn;
 	@FXML private ImageView minimizeIcon;
 	
-	@FXML private ImageView userIcon;
+	@FXML private Label currentTab;
+
+	@FXML private Circle circle;
+	//@FXML private ImageView userIcon;
 	@FXML private Label username;
 	
 	@FXML private Button homeBtn;
@@ -116,6 +146,7 @@ public class DashboardController implements Initializable{
 		initActionIcons();
 		UpdateTableView();
 		pagination.setPageFactory(this::createPage);
+		currentTab.setText("Lappins EL BENNA / Accueil");
 	}
 	
 	public void initIcons() {
@@ -135,9 +166,11 @@ public class DashboardController implements Initializable{
 		Image minimizeImage = new Image(minimizeIconFile.toURI().toString());
 		minimizeIcon.setImage(minimizeImage);
 
+		/*
 		File userIconFile =  new File("images/user-white.png");
 		Image userImage = new Image(userIconFile.toURI().toString());
 		userIcon.setImage(userImage);
+		*/
 
 		File homeIconFile =  new File("images/home-white.png");
 		Image homeImage = new Image(homeIconFile.toURI().toString());
@@ -209,6 +242,7 @@ public class DashboardController implements Initializable{
 						setGraphic(null);
 						setText(null);
 					} else {
+
 						ImageView iconDelete = new ImageView();
 						File FileDeleteIcon =  new File("images/delete-red.png");
 						Image deleteImg = new Image(FileDeleteIcon.toURI().toString(),25,25, false,true);
@@ -231,7 +265,34 @@ public class DashboardController implements Initializable{
 							displayEditForm(animal);
 						});
 
-						HBox managebtn = new HBox(iconEdit, iconDelete); // editIcon
+						ImageView notifyIcon = new ImageView();
+						File FileNotifyIcon =  new File("images/bell.png");
+						Image notifyImg = new Image(FileNotifyIcon.toURI().toString(), 25, 25, false, true);
+									
+						notifyIcon.setImage(notifyImg);
+						notifyIcon.setStyle(" -fx-cursor: hand ; -fx-fill:#C90202; ");
+						notifyIcon.setOnMouseClicked((MouseEvent event) -> {
+							if(isConnected()){
+								animal = tableView.getSelectionModel().getSelectedItem();
+								
+								Date today= Date.valueOf(LocalDate.now());
+								System.out.println("TODAY : "+today);
+
+								if(animal.getType().equals("LAPINE")){
+									if(animal.getDMB_next().after(today)){ //
+										displayNotificationForm(animal);	
+									}else{
+										displayAlert("alert", "Vous ne pouvez pas planifier un rappel pour cette lapine. Veuillez choisir une autre avec une date de mise bas ulterieure.");
+									}
+								}else{		
+									displayAlert("alert", "Vous ne pouvez pas planifier un rappel de mise bas pour un lapereua. Veuillez choisir une lapine");
+								}
+							}else{
+								displayAlert("alert", "Veuillez vérifier votre connexion internet puis réessayer");
+							}	
+						});
+						
+						HBox managebtn = new HBox(iconEdit, iconDelete, notifyIcon); 
 						managebtn.setStyle("-fx-alignment:center");
 						HBox.setMargin(iconDelete, new Insets(2, 2, 0, 3));
 						HBox.setMargin(iconEdit, new Insets(2, 2, 0, 3));
@@ -293,7 +354,6 @@ public class DashboardController implements Initializable{
 		return tableView;
 	}
 	
-	//fix success/error msgs
 	public void displayDeleteDialog(){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/deleteDialog.fxml"));
 		Parent root;
@@ -317,10 +377,10 @@ public class DashboardController implements Initializable{
 					if(deleteController.getAnswer()){
 						DataManager dataManager = new DataManager();
 						if(dataManager.DeleteAnimal(animal.getId())){
-							System.out.println("deleted succesfully");
 							UpdateTableView();
+							displayAlert("success","Opération effectuée avec succes.");
 						}else{
-							System.out.println("error");
+							displayAlert("alert","Une erreur c'est produite lors de la suppression de cet element.");
 						}
 					}
 				}
@@ -329,6 +389,20 @@ public class DashboardController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+
+	public static boolean isConnected(){
+        try {
+            URL u = new URL("https://www.google.com");
+            URLConnection cnx = u.openConnection();
+            cnx.connect();       
+            System.out.println("Internet connection established"); 
+            return true;
+
+        }catch (Exception e){
+            System.out.println("No Internet Connection available, please connect with internet");
+            return false ;                                            
+        } 
+    }
 
 	public void displayEditForm(Animal animal){
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/editForm.fxml"));
@@ -358,7 +432,75 @@ public class DashboardController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	
+	public void displayNotificationForm(Animal animal){
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/notificationDialog.fxml"));
+		Parent root;
+		try {
+			root = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+		
+			NotificationController notificationController = loader.getController();
+			notificationController.configureBackground();
+			
+			notificationController.setMinMaxDate(Date.valueOf(LocalDate.now()), animal.getDMB_next());
+			notificationController.setAnimal(animal);
+			notificationController.setUser(user);
 
+			stage.initModality(Modality.WINDOW_MODAL); 
+			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
+													
+			stage.initOwner(primaryStage);
+			notificationController.setDynamic();		
+			stage.show();
+
+			
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent we) {
+					if(notificationController.getAnswer()){
+						displayAlert("success", "Votre rappel est crée avec succes. Vous allez recevoir une notification a votre boite e-mail dans la date que vous avez précisé.");							
+					}else{
+						displayAlert("alert", "Une erreur c'est produite. Veuillez réessayer plus tard");
+					}
+				}
+			});
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void displayAlert(String type, String message){
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/alert.fxml"));
+		Parent root;
+		try {
+			root = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root));
+		
+			AlertController alertController = loader.getController();
+			alertController.configureBackground();
+			
+			alertController.setMessage(message);	
+
+			if(type.equals("success")){
+				alertController.changeIcon();
+			}
+
+			stage.initModality(Modality.WINDOW_MODAL); 
+			Stage primaryStage = (Stage)(mainAnchorPane.getScene().getWindow()); 
+													
+			stage.initOwner(primaryStage);
+			alertController.setDynamic();		
+			stage.show();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void UpdateTableView() {
 		DataManager dataManager = new DataManager();
 		ArrayList<Animal> animals = new ArrayList<Animal>();
@@ -373,7 +515,17 @@ public class DashboardController implements Initializable{
 	//set up the image
 	public void setupUserInfo(User user) {
 		this.user = user ;
+
+		File userIconFile = new File("user.png");
+
+		DataManager dataManager = new DataManager();
+		dataManager.loadImage(userIconFile, user.getId());
+
+		Image userImage = new Image(userIconFile.toURI().toString());
+		//userIcon.setImage(userImage);
+		circle.setFill(new ImagePattern(userImage));
 		username.setText(user.getUsername());
+
 	}
 	
 	public void configureBackground() {
@@ -453,4 +605,27 @@ public class DashboardController implements Initializable{
 		stage.setIconified(true);
 	}
 
+	@FXML
+	public void toDashboard() throws IOException {
+		currentTab.setText("Lappins EL BENNA / Accueil");
+		dashboardPane.toFront();
+		dashboardPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,Insets.EMPTY)));
+		System.out.println("to dasshboard");
+	}
+	
+	@FXML
+	public void toStats() throws IOException {
+		currentTab.setText("Lappins EL BENNA / Statistiques");
+		statsPane.toFront();
+		statsPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,Insets.EMPTY)));
+		System.out.println("to stats");
+	}
+	
+	@FXML
+	public void toSettings() throws IOException {
+		currentTab.setText("Lappins EL BENNA / Paramètres");
+		settingsPane.toFront();
+		settingsPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,Insets.EMPTY)));
+		System.out.println("to settings");
+	}
 }

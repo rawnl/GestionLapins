@@ -55,26 +55,6 @@ public class Main extends Application {
 	}	
 	
 	public static void main(String[] args) {
-		/*
-		try {
-
-			JobDetail dailyJob = JobBuilder.newJob(DailyJob.class).withIdentity("job1", "goup1").build();
-
-			Trigger trigger = TriggerBuilder.newTrigger().withIdentity("cronTrigger1", "group1")
-					.withSchedule(CronScheduleBuilder.cronSchedule("0 19 17 03 04 ? 2021")).build();//0/30 * * * * ?
-			
-			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();//new StdSchedulerFactory().getScheduler();
-			scheduler.start();
-			scheduler.scheduleJob(dailyJob, trigger);
-
-			Thread.sleep(10000);
-			//scheduler.shutdown();
-
-		} catch (SchedulerException | InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
-		// Utils4J.addToClasspath("file:///"+System.getProperty("java.home")+ File.separator+"lib"+File.separator+"jfxrt.jar");
 		launch(args);
 	}
 }

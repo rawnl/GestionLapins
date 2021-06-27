@@ -1,5 +1,10 @@
 package db;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Animal;
 import model.User;
@@ -35,12 +42,12 @@ public class DataManager {
 		 }
 	 }
     
-	public User Login(String username, String password){
+	public User Login(String email, String password){
 		User user = null ;
 		getConnection();
 		try {
-			PreStat = connection.prepareStatement("select * from Users where username = ? and password = ? ; ");
-			PreStat.setString(1,username);
+			PreStat = connection.prepareStatement("select * from Users where email = ? and password = ? ; ");
+			PreStat.setString(1,email);
 			PreStat.setString(2,password);
 			res = PreStat.executeQuery();
 			if(res.next()){
@@ -48,6 +55,7 @@ public class DataManager {
 				user.setId(res.getInt("ID"));
 				user.setName(res.getString("Name"));
 				user.setUsername(res.getString("Username"));
+				user.setEmail(res.getString("Email"));
 				user.setPassword(res.getString("Password"));
 			}
 		} catch (SQLException e) {
@@ -56,6 +64,69 @@ public class DataManager {
 		return user;
 	}
     
+	// test if inserted 
+	public static void insertImage(String url, int id){
+		getConnection();
+
+		File myFile = new File(url); //"images/logo-black.png"
+
+		try (FileInputStream fin = new FileInputStream(myFile)) {
+			
+			PreStat = connection.prepareStatement("update users set image=? where id=?");	
+            PreStat.setBinaryStream(1, fin, (int) myFile.length());
+			PreStat.setInt(2, id);
+            PreStat.executeUpdate();
+
+        }catch (IOException ex) {
+            
+			Logger lgr = Logger.getLogger(DataManager.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        
+		}catch (SQLException ex) {
+        
+			Logger lgr = Logger.getLogger(DataManager.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        
+		}
+    }
+    
+	public FileOutputStream loadImage(File fileName, int id){
+		String query = "SELECT Image FROM users where id = ?";
+		FileOutputStream file = null;
+		getConnection();
+        try {
+			PreStat = connection.prepareStatement(query);
+			PreStat.setInt(1, id);
+			ResultSet result = PreStat.executeQuery();
+
+			if (result.next()) {
+
+				try (FileOutputStream fos = new FileOutputStream(fileName)) {
+
+					Blob blob = result.getBlob("Image");
+					int len = (int) blob.length();
+
+					byte[] buf = blob.getBytes(1, len);
+
+					fos.write(buf, 0, len);
+					file = fos;
+
+				} catch (IOException ex) {
+
+					Logger lgr = Logger.getLogger(DataManager.class.getName());
+					lgr.log(Level.SEVERE, ex.getMessage(), ex);
+				}
+			}
+		} catch (SQLException ex) {
+			
+			Logger lgr = Logger.getLogger(DataManager.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+	
+		return file;
+	
+	}
+	
 	public boolean addAnimal(Animal animal) {
 		boolean result = false;
 		getConnection();
@@ -230,4 +301,16 @@ public class DataManager {
 		}
 		return animals;
 	}
+
+	/*
+	public static void main(String [] args){
+		FileOutputStream file = loadImage(1);
+		if( file != null){
+			System.out.println(file.toString());
+		}else{
+			System.out.println("error");
+		}
+	}
+	*/
+	
 }

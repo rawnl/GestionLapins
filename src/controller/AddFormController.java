@@ -132,14 +132,12 @@ public class AddFormController implements Initializable{
 		});
 	}
 
-	
 	public Date ConvertDate(LocalDate date) {
 		int year = date.getYear();
 		int month = date.getMonthValue();
 		int day = date.getDayOfMonth();
 		return new Date(year-1900,month-1, day);
 	}
-
 
 	public int ConvertToAge(Date date) {
 		LocalDate today = LocalDate.now();

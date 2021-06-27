@@ -69,16 +69,17 @@ public class LoginController implements Initializable{
 			if (user != null) {
 				toDashboard(user);
 			}else {
-				username.setStyle("-jfx-unfocus-color: #ff5042; ");
-				password.setStyle("-jfx-unfocus-color: #ff5042; ");
+				//#ff5042
+				username.setStyle("-jfx-unfocus-color: #1b1717; ");
+				password.setStyle("-jfx-unfocus-color: #1b1717; ");
 				error_msg.setText("Tentative de connexion invalide !");
-				error_msg.textFillProperty().setValue(Paint.valueOf("#ff5042"));
+				error_msg.textFillProperty().setValue(Paint.valueOf("#1b1717"));
 			}
 		}else {
-			username.setStyle("-jfx-unfocus-color: #ffae42; ");
-			password.setStyle("-jfx-unfocus-color: #ffae42; ");
+			username.setStyle("-jfx-unfocus-color: #1b1717; ");
+			password.setStyle("-jfx-unfocus-color: #1b1717; ");
 			error_msg.setText("Veuillez remplir les champs");
-			error_msg.textFillProperty().setValue(Paint.valueOf("#ffae42"));
+			error_msg.textFillProperty().setValue(Paint.valueOf("#1b1717"));
 		}
 	}
 	

@@ -16,12 +16,12 @@
          <children>
             <AnchorPane layoutX="207.0" layoutY="33.0" maxWidth="339.0" prefHeight="300.0" prefWidth="333.0" style="-fx-background-color: #C90202; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0">
                <children>
-                  <Label layoutX="113.0" layoutY="33.0" prefWidth="141.0" text="Authentification" textFill="WHITE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="33.0">
+                  <!--<Label layoutX="113.0" layoutY="33.0" prefWidth="141.0" text="Authentification" textFill="WHITE" AnchorPane.leftAnchor="113.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="33.0">
                      <font>
                         <Font size="18.0" />
                      </font>
-                  </Label>
-                  <JFXTextField fx:id="username" focusColor="WHITE" labelFloat="true" layoutX="93.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" promptText="Nom d'utilisateur" style="-fx-prompt-text-fill: white; -fx-text-fill: white;" unFocusColor="WHITE" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="40.0" />
+                  </Label>-->
+                  <JFXTextField fx:id="username" focusColor="WHITE" labelFloat="true" layoutX="93.0" layoutY="89.0" prefHeight="25.0" prefWidth="200.0" promptText="E-mail" style="-fx-prompt-text-fill: white; -fx-text-fill: white;" unFocusColor="WHITE" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="40.0" />
                   <JFXPasswordField fx:id="password" focusColor="WHITE" labelFloat="true" layoutX="93.0" layoutY="138.0" prefHeight="25.0" prefWidth="200.0" promptText="Mot de passe" style="-fx-prompt-text-fill: white; -fx-text-fill: white;" unFocusColor="WHITE" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="40.0" />
                   <JFXButton fx:id="login" layoutX="93.0" layoutY="218.0" onAction="#loginOnAction" prefHeight="37.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 1em;" text="Se connecter" textFill="#c90202" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="40.0" />
                   <Label fx:id="error_msg" layoutX="90.0" layoutY="187.0" prefHeight="17.0" prefWidth="200.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="43.0" />

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="420.0" style="-fx-background-color: transparent; -fx-background-radius: 1em;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.NotificationController">
+   <children>
+      <AnchorPane fx:id="mainAnchor" prefHeight="265.0" prefWidth="420.0" style="-fx-background-color: transparent; -fx-background-radius: 1em;">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 1em;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <ImageView fx:id="icon" fitHeight="31.0" fitWidth="31.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+                     <image>
+                        <Image url="@../../images/bell.png" />
+                     </image>
+                  </ImageView>
+                  <Text layoutX="33.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="veuillez préciser avant combien de jours vous souhaitez planifier ce rappel :" wrappingWidth="333.0546875">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <JFXButton fx:id="confirmBtn" layoutX="178.0" layoutY="173.0" onAction="#confirmBtnOnAction" prefHeight="31.0" prefWidth="73.0" style="-fx-background-color: grey;" text="Confirmer" textFill="WHITE" />
+                  <JFXButton fx:id="cancelBtn" layoutX="284.0" layoutY="173.0" onAction="#cancelBtnOnAction" prefHeight="31.0" prefWidth="73.0" style="-fx-background-color: #C90202;" text="Annuler" textFill="WHITE" />
+                  <Label layoutX="54.0" layoutY="19.0" text="Rappel" textFill="#c90202">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <JFXDatePicker fx:id="notificationDate" defaultColor="#c90202" layoutX="33.0" layoutY="107.0" prefHeight="28.0" prefWidth="333.0" />
+                  <Label fx:id="notificationDateMsg" layoutX="31.0" layoutY="146.0" text="Veuillez choisir une date valide." textFill="#c90202" visible="false" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
