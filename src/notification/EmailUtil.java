@@ -4,7 +4,7 @@ package notification;
 import java.util.Date;
 import java.util.Properties;
 //import java.util.TimeZone;
-
+/*
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -76,3 +76,4 @@ public class EmailUtil {
     }
     
 }
+*/

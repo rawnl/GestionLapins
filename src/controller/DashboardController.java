@@ -97,7 +97,6 @@ public class DashboardController implements Initializable{
 	@FXML private Label currentTab;
 
 	@FXML private Circle circle;
-	//@FXML private ImageView userIcon;
 	@FXML private Label username;
 	
 	@FXML private Button homeBtn;
@@ -148,6 +147,14 @@ public class DashboardController implements Initializable{
 		pagination.setPageFactory(this::createPage);
 		currentTab.setText("Lappins EL BENNA / Accueil");
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	public void initIcons() {
 		File brandingFile =  new File("images/logo-red.png");
@@ -165,12 +172,6 @@ public class DashboardController implements Initializable{
 		File minimizeIconFile =  new File("images/minimize-white.png");
 		Image minimizeImage = new Image(minimizeIconFile.toURI().toString());
 		minimizeIcon.setImage(minimizeImage);
-
-		/*
-		File userIconFile =  new File("images/user-white.png");
-		Image userImage = new Image(userIconFile.toURI().toString());
-		userIcon.setImage(userImage);
-		*/
 
 		File homeIconFile =  new File("images/home-white.png");
 		Image homeImage = new Image(homeIconFile.toURI().toString());
@@ -512,17 +513,16 @@ public class DashboardController implements Initializable{
 		pagination.setPageCount(maxPages);
 	}
 	
-	//set up the image
 	public void setupUserInfo(User user) {
-		this.user = user ;
-
+		//this.user = user ;
+		setUser(user);
 		File userIconFile = new File("user.png");
 
 		DataManager dataManager = new DataManager();
 		dataManager.loadImage(userIconFile, user.getId());
 
 		Image userImage = new Image(userIconFile.toURI().toString());
-		//userIcon.setImage(userImage);
+	
 		circle.setFill(new ImagePattern(userImage));
 		username.setText(user.getUsername());
 
@@ -553,10 +553,6 @@ public class DashboardController implements Initializable{
 				stage.setY(event.getScreenY() - yOffset);
 			}
 		});
-	}
-	
-	public User getUser() {
-		return user;
 	}
 	
 	public void AddOnAction(ActionEvent event) throws IOException {
@@ -615,10 +611,14 @@ public class DashboardController implements Initializable{
 	
 	@FXML
 	public void toStats() throws IOException {
-		currentTab.setText("Lappins EL BENNA / Statistiques");
-		statsPane.toFront();
-		statsPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,Insets.EMPTY)));
-		System.out.println("to stats");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/stats.fxml"));
+		AnchorPane pane = loader.load();
+
+		StatsController StatsController = loader.getController();
+		StatsController.setupUserInfo(getUser());
+
+		mainAnchorPane.getChildren().clear();
+        mainAnchorPane.getChildren().add(pane);
 	}
 	
 	@FXML

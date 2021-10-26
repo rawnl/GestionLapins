@@ -181,6 +181,7 @@ public class NotificationController implements Initializable {
         setScheduledDate(notificationDate.getValue());
         if(getScheduledDate().compareTo(maxDate) <= 0 && getScheduledDate().compareTo(minDate) >= 0 ){
             notificationDateMsg.setVisible(false);
+            
             //call the google sheets API	
             setAnswer(scheduleEmail());
 
@@ -194,11 +195,10 @@ public class NotificationController implements Initializable {
     }	
     
     public static Credential authorize() throws IOException, GeneralSecurityException {
-        
         InputStream in = NotificationController.class.getResourceAsStream(CREDENTIAL_FILE_PATH); //"../resources/credentials.json"
-
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
         
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
+
         List<String> SCOPES = Arrays.asList(SheetsScopes.SPREADSHEETS);
         
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
@@ -255,6 +255,7 @@ public class NotificationController implements Initializable {
         String range = "ScheduledEmails!A1:D3";
         
         if(checkConnection()){
+            System.out.println("inside the if test");
             System.out.println(getScheduledDate());
             String date = Integer.toString(getScheduledDate().getDayOfMonth())+"-"
                             +Integer.toString(getScheduledDate().getMonthValue())+"-"

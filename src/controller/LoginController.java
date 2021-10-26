@@ -112,6 +112,7 @@ public class LoginController implements Initializable{
 		Stage stage = new Stage();
 		stage.setScene(new Scene(root));
 		DashboardController dashboardController = loader.getController();
+		
 		dashboardController.setupUserInfo(user);
 		dashboardController.configureBackground();
 		dashboardController.enableSearch();

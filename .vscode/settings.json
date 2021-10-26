@@ -67,7 +67,17 @@
         "libs/activation-1.1.jar",
         "libs/javax.mail.jar",
         "libs/gdata-client-1.0.jar",
-        "libs/javax.mail-1.6.2.jar"
+        "libs/javax.mail-1.6.2.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.base.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.controls.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.fxml.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.graphics.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.media.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.swing.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx.web.jar",
+        "c:\\Program Files\\Java\\javafx-sdk-15.0.1\\lib\\javafx-swt.jar",
+        "c:\\Program Files\\Java\\quartz-2.3.0-distribution\\quartz-2.3.0-SNAPSHOT\\lib\\slf4j-log4j12-1.7.7.jar",
+        "libs/javax.mail.glassfish-1.4.1.v201005082020.jar",
     ],
     "scenebuilder.home": "C:\\Program Files\\SceneBuilder\\SceneBuilder.exe"
 }

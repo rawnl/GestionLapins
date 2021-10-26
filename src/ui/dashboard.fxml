@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -28,7 +27,7 @@
                <children>
                   <AnchorPane prefHeight="414.0" prefWidth="940.0" style="-fx-background-color: white; -fx-background-radius: 1em;">
                      <children>
-                        <AnchorPane layoutX="265.0" layoutY="23.0" prefHeight="87.0" prefWidth="760.0" style="-fx-background-color: #fbfbf0; -fx-background-radius: 1em;" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="15.0">
+                        <AnchorPane layoutX="265.0" layoutY="33.0" prefHeight="87.0" prefWidth="760.0" style="-fx-background-color: #fbfbf0; -fx-background-radius: 1em;" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="15.0">
                            <children>
                               <Label fx:id="currentTab" layoutX="14.0" layoutY="29.0" prefHeight="30.0" prefWidth="257.0" textFill="#513737">
                                  <font>
@@ -45,13 +44,7 @@
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
-                                 <children>
-                                    <AnchorPane prefHeight="291.0" prefWidth="683.0">
-                                       <children>
-                                          <PieChart fx:id="pieChart" />
-                                       </children>
-                                    </AnchorPane>
-                                 </children>
+                              
                               </GridPane>
                               <GridPane fx:id="settingsPane" layoutX="10.0" layoutY="10.0">
                                  <columnConstraints>

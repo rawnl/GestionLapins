@@ -3,6 +3,8 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Map;
 /*
 import java.net.URLConnection;
 import java.sql.Date;
@@ -10,6 +12,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 */
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
 
 //import java.util.function.Predicate;
 
@@ -26,6 +30,11 @@ import javafx.fxml.Initializable;
 //import javafx.scene.Node;
 //import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 /*
@@ -45,6 +54,8 @@ import javafx.scene.layout.AnchorPane;
 //import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 //import javafx.stage.Modality;
 import javafx.stage.StageStyle;
@@ -52,7 +63,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 */
-//import db.DataManager;
+import db.DataManager;
 import model.Animal;
 import model.User;
 
@@ -78,7 +89,9 @@ public class StatsController implements Initializable{
 	@FXML private Button minimizeBtn;
 	@FXML private ImageView minimizeIcon;
 	
-	@FXML private ImageView userIcon;
+	@FXML private Label currentTab;
+
+	@FXML private Circle circle;
 	@FXML private Label username;
 	
 	@FXML private Button homeBtn;
@@ -95,11 +108,20 @@ public class StatsController implements Initializable{
 
 	@FXML private TextField search; 
 
+	@FXML CategoryAxis xAxis;
+	@FXML NumberAxis yAxis;
+	@FXML private LineChart<Number, Number> lineChart;
+
+	@FXML private PieChart pieChart;
+
 	private ObservableList<Animal> obsList;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		initIcons();
+		fillPieChart();
+		drawLineChart();
+		currentTab.setText("Lappins EL BENNA / Statistiques");
 	}
 	
 	public void initIcons() {
@@ -118,11 +140,7 @@ public class StatsController implements Initializable{
 		File minimizeIconFile =  new File("images/minimize-white.png");
 		Image minimizeImage = new Image(minimizeIconFile.toURI().toString());
 		minimizeIcon.setImage(minimizeImage);
-
-		File userIconFile =  new File("images/user-white.png");
-		Image userImage = new Image(userIconFile.toURI().toString());
-		userIcon.setImage(userImage);
-
+		
 		File homeIconFile =  new File("images/home-white.png");
 		Image homeImage = new Image(homeIconFile.toURI().toString());
 		homeIcon.setImage(homeImage);
@@ -135,14 +153,19 @@ public class StatsController implements Initializable{
 		Image confImage = new Image(confIconFile.toURI().toString());
 		confIcon.setImage(confImage);
 
-		File addIconFile =  new File("images/plus-white.png");
-		Image addImage = new Image(addIconFile.toURI().toString());
-		addIcon.setImage(addImage);
 	}
 
-	//set up the image
 	public void setupUserInfo(User user) {
 		this.user = user ;
+
+		File userIconFile = new File("user.png");
+
+		DataManager dataManager = new DataManager();
+		dataManager.loadImage(userIconFile, user.getId());
+
+		Image userImage = new Image(userIconFile.toURI().toString());
+		
+		circle.setFill(new ImagePattern(userImage));
 		username.setText(user.getUsername());
 	}
 	
@@ -176,6 +199,45 @@ public class StatsController implements Initializable{
 	public User getUser() {
 		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+
+	public void fillPieChart(){
+		DataManager dataManager = new DataManager();
+	
+		int maleCount = dataManager.getMaleFemelleCount("Lapereau");
+		int femelleCount = dataManager.getMaleFemelleCount("Lapine");
+
+		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+        	new PieChart.Data("Lapereau(x)", maleCount), 
+        	new PieChart.Data("Lapine(s)", femelleCount));
+		
+		pieChart.setData(pieChartData);
+		pieChart.setClockwise(true); 
+		pieChart.setLabelLineLength(25); 
+		pieChart.setLabelsVisible(true); 
+		pieChart.setStartAngle(90);     
+
+	}
+
+	public void drawLineChart(){
+		XYChart.Series series = new XYChart.Series<>();
+
+		DataManager dataManager = new DataManager();
+		String today = LocalDate.now().toString();
+		Map<String, Integer> myMap = dataManager.countGroupBy(today);
+		
+		for (Map.Entry<String, Integer> entry : myMap.entrySet()) {
+			series.getData().add(new XYChart.Data<>(entry.getKey(),entry.getValue()));
+		}
+
+		lineChart.getData().addAll(series);
+		lineChart.lookup(".chart-plot-background").setStyle("-fx-background-color: transparent;");
+
+	}
 	
 	@FXML
 	public void closeBtnOnAction(ActionEvent event) {
@@ -203,15 +265,13 @@ public class StatsController implements Initializable{
 	@FXML
 	public void toDashboard() throws IOException {
 		AnchorPane statPane = FXMLLoader.load(getClass().getResource("../ui/dashboard.fxml"));
-		mainAnchorPane.getChildren().setAll(statPane);
-		
+		mainAnchorPane.getChildren().setAll(statPane);	
 	}
 	
 	@FXML
 	public void toStats() throws IOException {
 		AnchorPane statPane = FXMLLoader.load(getClass().getResource("../ui/stats.fxml"));
-		mainAnchorPane.getChildren().setAll(statPane);
-		
+		mainAnchorPane.getChildren().setAll(statPane);	
 	}
 
 	@FXML
@@ -220,4 +280,5 @@ public class StatsController implements Initializable{
 		mainAnchorPane.getChildren().setAll(statPane);
 		
 	}
+
 }

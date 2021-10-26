@@ -17,7 +17,7 @@ public class DailyJob implements Job{
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         //logger.info("info msg");
         System.out.println("Daily job "+ new Date());
-        EmailUtil.sendEmail("www.rawnl97@gmail.com", "Lappins El benna", "This is a scheduled email ." );
+//        EmailUtil.sendEmail("www.rawnl97@gmail.com", "Lappins El benna", "This is a scheduled email ." );
     }
 
 }

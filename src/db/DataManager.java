@@ -11,10 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import javafx.print.PrintColor;
 import model.Animal;
 import model.User;
 
@@ -302,15 +309,63 @@ public class DataManager {
 		return animals;
 	}
 
-	/*
+	public int getMaleFemelleCount(String type){
+		int count = 0 ;
+		try {
+			PreStat = connection.prepareStatement("select count(*) AS rowcount from Animals where Type = ? ; ");
+			PreStat.setString(1,type);
+			res = PreStat.executeQuery();
+			
+			res.next();
+			count = res.getInt("rowcount");
+			System.out.println(count);
+			PreStat.close();
+			res.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	public static Map<String, Integer> countGroupBy(String date){
+		Map<String, Integer> myMap = null;
+		getConnection();
+		try {
+			PreStat = connection.prepareStatement("SELECT DMB_next, count(DMB_next) as rowcount FROM Animals where DMB_next >= ? group by DMB_next");
+			PreStat.setString(1, date);
+
+			res = PreStat.executeQuery();
+			
+			myMap = new HashMap<String, Integer>();
+			
+			while(res.next()){
+				myMap.put(res.getString(1), res.getInt(2));
+			}			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return myMap;
+	}
+/*	
 	public static void main(String [] args){
-		FileOutputStream file = loadImage(1);
+		/*FileOutputStream file = loadImage(1);
 		if( file != null){
 			System.out.println(file.toString());
 		}else{
 			System.out.println("error");
+		}*/
+/*
+		LocalDate now = LocalDate.now();  
+		//System.out.println(now);
+		
+
+		Map<String, Integer> myMap = countGroupBy();
+		
+		for (Map.Entry<String, Integer> entry : myMap.entrySet()) {
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		}
-	}
-	*/
+
+	}*/
 	
 }
